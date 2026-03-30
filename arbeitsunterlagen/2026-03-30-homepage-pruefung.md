@@ -14,7 +14,7 @@ Datum: 2026-03-30
 
 5. ~~Niedrig: Die konvertierten PNGs sehen visuell in Ordnung aus und behalten die Transparenz, sind aber deutlich groesser als das originale WebP-Stickerbild, ohne erkennbaren Mehrwert: etwa `74 KB` fuer das WebP gegen etwa `407 KB` pro PNG. Falls das spaeter als Logo verwendet wird, sind die PNGs in dieser Form unnoetig schwer, sofern PNG nicht ausdruecklich benoetigt wird.~~
 
-6. Niedrig: Im Repo gibt es etwas Dateichaos und Duplikate. `IMG-20260330-WA0000(1).jpg` und `WhatsApp Image 2026-03-30 at 15.29.57.jpeg` wirken wie dieselbe Bildquelle, und der Ordner `temp` enthaelt Zwischenstaende aus der Konvertierung statt produktiver Dateien. Das wird schnell unuebersichtlich, sobald weitere Entwuerfe dazukommen.
+6. ~~Niedrig: Im Repo gibt es etwas Dateichaos und Duplikate. `IMG-20260330-WA0000(1).jpg` und `WhatsApp Image 2026-03-30 at 15.29.57.jpeg` wirken wie dieselbe Bildquelle, und der Ordner `temp` enthaelt Zwischenstaende aus der Konvertierung statt produktiver Dateien. Das wird schnell unuebersichtlich, sobald weitere Entwuerfe dazukommen.~~
 
 ## Offene Fragen und Annahmen
 
