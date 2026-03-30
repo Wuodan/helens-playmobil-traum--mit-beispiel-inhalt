@@ -606,27 +606,80 @@ function closeAllSubpages() {
     });
 }
 
+function showLandingPage() {
+    closeAllDetails();
+    closeAllSubpages();
+    mainContent.style.display = "";
+}
+
+function showDetail(detailId) {
+    const target = document.getElementById(detailId);
+
+    if (!target) {
+        return;
+    }
+
+    showLandingPage();
+    target.classList.add("is-open");
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function showSubpage(subpageId) {
+    const target = document.getElementById(subpageId);
+
+    if (!target) {
+        return;
+    }
+
+    closeAllDetails();
+    closeAllSubpages();
+    mainContent.style.display = "none";
+    target.classList.add("is-open");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function clearViewHash() {
+    history.pushState({}, "", location.pathname + location.search);
+    showLandingPage();
+}
+
+function renderFromHash() {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+        showLandingPage();
+        return;
+    }
+
+    if (hash.startsWith("detail-") && document.getElementById(hash)) {
+        showDetail(hash);
+        return;
+    }
+
+    if (hash.startsWith("subpage-") && document.getElementById(hash)) {
+        showSubpage(hash);
+        return;
+    }
+
+    showLandingPage();
+
+    const target = document.getElementById(hash);
+
+    if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
 detailButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const detailId = "detail-" + button.dataset.detail;
-        const target = document.getElementById(detailId);
-        const isOpen = target.classList.contains("is-open");
-
-        closeAllSubpages();
-        mainContent.style.display = "";
-        closeAllDetails();
-
-        if (!isOpen) {
-            target.classList.add("is-open");
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        window.location.hash = detailId;
     });
 });
 
 closeButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        const section = button.closest(".details");
-        section.classList.remove("is-open");
+        clearViewHash();
     });
 });
 
@@ -634,31 +687,26 @@ subpageLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
         event.preventDefault();
         const subpageId = "subpage-" + link.dataset.subpage;
-        const target = document.getElementById(subpageId);
-
-        closeAllDetails();
-        closeAllSubpages();
-        mainContent.style.display = "none";
-        target.classList.add("is-open");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.location.hash = subpageId;
     });
 });
 
 backLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
         event.preventDefault();
-        closeAllSubpages();
-        mainContent.style.display = "";
-        const target = link.dataset.back ? document.getElementById("subpage-" + link.dataset.back) : null;
 
-        if (target) {
-            target.classList.add("is-open");
-            mainContent.style.display = "none";
+        if (link.dataset.back) {
+            window.location.hash = "subpage-" + link.dataset.back;
+            return;
         }
 
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        clearViewHash();
     });
 });
+
+window.addEventListener("hashchange", renderFromHash);
+window.addEventListener("popstate", renderFromHash);
+renderFromHash();
 </script>
 
 </body>
